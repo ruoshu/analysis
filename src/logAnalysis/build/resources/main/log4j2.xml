@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+    <Appenders>
+
+        <RollingRandomAccessFile name="msgRollingRandomAccessFile"
+                                 fileName="/data/logs/logAnalysis.log"
+                                 filePattern="/data/logs/$${date:yyyy-MM}/logAnalysis-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout charset="UTF-8">
+                <Pattern>[%d{DEFAULT}] [%t] [%-5level] [%logger{36}] - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"
+                                           modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingRandomAccessFile>
+
+    </Appenders>
+    <Loggers>
+
+        <Logger name="com.ksyun" level="trace">
+        </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="msgRollingRandomAccessFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
+

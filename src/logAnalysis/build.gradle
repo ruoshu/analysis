@@ -1,0 +1,73 @@
+group 'com.ksyun.hadoop'
+version '1.0-SNAPSHOT'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'maven'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.ksyun.hadoop.Bootstrap'
+        attributes 'Implementation-Title': 'Gradle'
+    }
+    into('lib') {
+        from configurations.runtime
+    }
+}
+
+
+configurations {
+    deployerJars
+}
+
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://10.69.34.219:8888/nexus/content/groups/public/"
+    }
+}
+
+dependencies {
+    compile('org.apache.hadoop:hadoop-common:2.7.3')
+    compile('org.apache.hadoop:hadoop-mapreduce-client-core:2.7.3')
+    compile('org.codehaus.groovy:groovy-all:2.4.7')
+    compile 'org.apache.logging.log4j:log4j-core:2.6.2'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['./src/main/groovy']
+        }
+
+    }
+
+//    test {
+//        groovy {
+//            srcDirs = ['./src/test/groovy']
+//        }
+//    }
+}
+
+//task runScript(type: JavaExec) {
+//    description 'Run Groovy script'
+//
+//    // Set main property to name of Groovy script class.
+//    main = 'Bootstrop'
+//
+//    // Set classpath for running the Groovy script.
+//    classpath = sourceSets.main.runtimeClasspath
+//}
+//
+//defaultTasks 'runScript'
