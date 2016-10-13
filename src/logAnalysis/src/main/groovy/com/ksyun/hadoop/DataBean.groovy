@@ -14,7 +14,7 @@ class DataBean implements org.apache.hadoop.io.Writable {
     void write(DataOutput dataOutput) throws IOException {
         dataOutput.writeUTF(this.action as String)
         dataOutput.writeUTF(this.time as String)
-        dataOutput.writeUTF(this.httpStatus as String)
+        dataOutput.writeInt(this.httpStatus as Integer)
         dataOutput.writeDouble(this.respTime as Double)
         dataOutput.writeUTF(this.param as String)
     }
@@ -23,7 +23,7 @@ class DataBean implements org.apache.hadoop.io.Writable {
     void readFields(DataInput dataInput) throws IOException {
         this.action = dataInput.readUTF()
         this.time = dataInput.readUTF()
-        this.httpStatus = dataInput.readUTF()
+        this.httpStatus = dataInput.readInt()
         this.respTime = dataInput.readDouble()
         this.param = dataInput.readUTF()
 

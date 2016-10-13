@@ -73,18 +73,14 @@ public class DataCount {
                     dmax = bean.respTime
             }
 
-
-
-
             def sum = list.size()
-
-//            def max = list.max{it.respTime}.respTime
 
             double sumTime = 0
             list.each { sumTime += it.respTime }
 
             def avg = sumTime / (list.size() == 0 as double ? 1 : list.size())
-                    output.collect(key, new Text(",$sum,$avg,$dmin,$dmax"))
+            output.collect(key, new Text(",$sum,$avg,$dmin,$dmax"))
+
 
         }
 

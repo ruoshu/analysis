@@ -45,6 +45,26 @@ class Bootstrap {
 
 
         //log.info "end"
+        JobConf jobConf1 = new JobConf(conf, ConsoleDataCount.class);
+
+        jobConf1.setJobName("count")
+        jobConf1.setJarByClass(ConsoleDataCount.class);
+
+        jobConf1.setMapperClass(ConsoleDataCount.ConsoleDCMapper.class)
+        jobConf1.setMapOutputKeyClass(Text.class);
+        jobConf1.setMapOutputValueClass(ConsoleDataBean.class);
+        FileInputFormat.setInputPaths(jobConf1, new Path(args[2] as String));
+
+        jobConf1.setReducerClass(ConsoleDataCount.ConsoleDCReducer.class);
+        jobConf1.setOutputKeyClass(Text.class);
+        jobConf1.setOutputValueClass(Text.class);
+        FileOutputFormat.setOutputPath(jobConf1, new Path(args[3] as String));
+
+        jobConf1.setInputFormat(TextInputFormat.class);
+        jobConf1.setOutputFormat(TextOutputFormat.class);
+
+        Job job1 = new Job(jobConf1);
+        job1.waitForCompletion(true);
 
     }
 }
